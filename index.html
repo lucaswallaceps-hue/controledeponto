@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ponto Pro - Sistema de Banco de Horas</title>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <style>
         :root {
             --primary: #1a73e8;
@@ -99,6 +100,7 @@
     <button onclick="changeMonth(-1)">◀ Anterior</button>
     <span id="currentMonth" style="font-size: 1.1rem; font-weight: 500; min-width: 150px; text-align: center;"></span>
     <button onclick="changeMonth(1)">Próximo ▶</button>
+    <button onclick="exportarExcel()" style="background: #188038; color: white;">📊 Exportar Excel</button>
 </div>
 
 <table id="pontoTable">
@@ -273,3 +275,4 @@
 </body>
 
 </html>
+
