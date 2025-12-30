@@ -73,6 +73,20 @@
         .negativo { color: var(--danger); }
 
         .summary { margin-top: 20px; text-align: right; font-size: 18px; font-weight: 500; padding: 15px; background: white; border-radius: 8px; }
+        
+        /* Adicione isso dentro da sua tag <style> */
+#tableBody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cinza claro para as linhas pares */
+}
+
+#tableBody tr:nth-child(odd) {
+    background-color: #ffffff; /* Branco para as linhas ímpares */
+}
+
+/* Garante que o efeito continue bonito ao passar o mouse */
+#tableBody tr:hover {
+    background-color: #e8f0fe;
+}
     </style>
 </head>
 <body>
@@ -257,4 +271,5 @@
 </script>
 
 </body>
+
 </html>
