@@ -269,11 +269,66 @@
         summaryEl.className = `summary ${totalExtra >= 0 ? 'positivo' : 'negativo'}`;
     }
 
+    function exportarExcel() {
+    // 1. Verifica se a biblioteca carregou
+    if (typeof XLSX === 'undefined') {
+        alert("A biblioteca de exportação ainda está carregando. Por favor, aguarde 5 segundos e tente novamente.");
+        return;
+    }
+
+    try {
+        const tabela = [];
+        // Cabeçalho
+        tabela.push(["DATA", "DIA", "ENTRADA", "SAÍDA ALM.", "ENTRADA ALM.", "SAÍDA FINAL", "TOTAL TRAB.", "EXTRA/DÉBITO"]);
+
+        // Seleciona todas as linhas da tabela
+        const rows = document.querySelectorAll("#tableBody tr");
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll("td");
+            const inputs = row.querySelectorAll("input.time-unit"); // Seleciona apenas os campos de hora/min
+
+            // Mapeia os valores de cada par de inputs (HH e MM)
+            const getVal = (idxH, idxM) => {
+                const h = inputs[idxH]?.value || "";
+                const m = inputs[idxM]?.value || "";
+                return (h || m) ? `${h}:${m}` : "";
+            };
+
+            const linha = [
+                cells[0].innerText, // Data
+                cells[1].innerText, // Dia
+                getVal(0, 1),       // Entrada
+                getVal(2, 3),       // Saída Almoço
+                getVal(4, 5),       // Entrada Almoço
+                getVal(6, 7),       // Saída Final
+                cells[6].innerText, // Total
+                cells[7].innerText  // Extra
+            ];
+            tabela.push(linha);
+        });
+
+        // 2. Criação do arquivo Excel
+        const ws = XLSX.utils.aoa_to_sheet(tabela);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Controle de Ponto");
+
+        // 3. Nome do arquivo baseado no mês atual mostrado na tela
+        const nomeMes = document.getElementById('currentMonth').innerText.replace("/", "_");
+        XLSX.writeFile(wb, `Ponto_${nomeMes}.xlsx`);
+
+    } catch (error) {
+        console.error("Erro detalhado:", error);
+        alert("Erro ao exportar. Tente atualizar a página (F5) e clique novamente.");
+    }
+}
+
     renderTable();
 </script>
 
 </body>
 
 </html>
+
 
 
